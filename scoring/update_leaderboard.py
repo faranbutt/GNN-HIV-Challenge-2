@@ -134,4 +134,4 @@ updated_readme = re.sub(pattern, replacement, readme_content, flags=re.DOTALL)
 
 with open(readme_file, 'w') as f:
     f.write(updated_readme)
-print(f"Updated {readme_file}")
+print(f"Update {readme_file}")
