@@ -1,0 +1,43 @@
+# scoring/scoring_script.py
+import pandas as pd
+from sklearn.metrics import roc_auc_score
+import sys
+import json
+import argparse
+
+def score_submission(submission_file, truth_file='data/test_labels.csv'):
+    """
+    Calculate ROC-AUC score for a submission.
+    """
+    try:
+        submission = pd.read_csv(submission_file)
+        truth = pd.read_csv(truth_file)
+        
+        # Ensure alignment
+        merged = truth.merge(submission, on='graph_id')
+        
+        if len(merged) != len(truth):
+            print(f"Warning: Submission missing {len(truth) - len(merged)} graph_ids.")
+            
+        score = roc_auc_score(merged['target'], merged['probability'])
+        return score, len(merged)
+    except Exception as e:
+        print(f"Error during scoring: {e}")
+        return 0.0, 0
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("submission_file", help="Path to the submission CSV")
+    parser.add_argument("--json", action="store_true", help="Output JSON for CI parsing")
+    args = parser.parse_args()
+
+    score, count = score_submission(args.submission_file)
+    
+    # Human readable output
+    print(f"Evaluation completed on {count} samples.")
+    print(f"Submission ROC-AUC Score: {score:.4f}")
+    
+    # JSON output for CI/CD
+    if args.json:
+        print("---")
+        print(json.dumps({"roc_auc": float(score), "n_samples": count}))
