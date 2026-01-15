@@ -4,7 +4,7 @@ import os
 from datetime import datetime
 import re
 
-# File paths
+# File paths (Ensure these match your actual file names)
 leaderboard_csv = 'leaderboard.csv'
 leaderboard_html = 'leaderboard.html'
 readme_file = 'README.md'
@@ -134,4 +134,4 @@ updated_readme = re.sub(pattern, replacement, readme_content, flags=re.DOTALL)
 
 with open(readme_file, 'w') as f:
     f.write(updated_readme)
-print(f"Update {readme_file}")
+print(f"Updated {readme_file}")

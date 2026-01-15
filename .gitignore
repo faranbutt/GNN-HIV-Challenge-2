@@ -15,8 +15,7 @@ __pycache__/
 *.log
 .ipynb_checkpoints/
 !/submissions/.gitkeep       
-/data/*.pkl                   
-/data/test_labels.csv         
+/data/*.pkl                         
 /data/*.csv                  
 /results/
 /outputs/
