@@ -16,9 +16,12 @@ def score_submission(submission_file, truth_file='data/test_labels.csv'):
         # Ensure alignment
         merged = truth.merge(submission, on='graph_id')
         
-        if len(merged) != len(truth):
-            print(f"Warning: Submission missing {len(truth) - len(merged)} graph_ids.")
-            
+        if merged.empty:
+            print("CRITICAL ERROR: No matching graph_ids found between truth and submission!")
+            return 0.0, 0
+        if merged['probability'].isnull().any():
+            print("ERROR: Submission contains NaN probabilities.")
+            return 0.0, len(merged)
         score = roc_auc_score(merged['target'], merged['probability'])
         return score, len(merged)
     except Exception as e:
