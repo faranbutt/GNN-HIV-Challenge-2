@@ -11,7 +11,7 @@ readme_file = 'README.md'
 
 def generate_html_content(df):
     """
-    Generates HTML string for the leaderboard.
+    Generates HTML string for the leaderboards.
     """
     html_content = """
 <!DOCTYPE html>
