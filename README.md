@@ -5,6 +5,9 @@ Welcome to the **GNN HIV Challenge**! This competition focuses on predicting the
 
 ## 🏆 View Live Leaderboard
 
+[Live Leaderboard here](https://faranbutt.github.io/GNN-HIV-Challenge-2/leaderboard.html)
+
+
 ## 🧪 Problem Description
 The task is to classify **molecular graphs** to predict anti-HIV activity.
 
@@ -16,13 +19,13 @@ The task is to classify **molecular graphs** to predict anti-HIV activity.
 - **0**: Non-Inhibitor (Inactive)  
 - **1**: Inhibitor (Active)  
 
-## 🤔 What’s Challenging?
+### 🤔 What’s Challenging?
 - **Non-Euclidean Data**: Molecules are graph-structured data with varying sizes and complex topologies.  
 - **Class Imbalance**: The dataset is imbalanced (~25% positive, ~75% negative), so ROC-AUC is preferred over accuracy.  
 - **Feature Sparsity**: Models must learn meaningful molecular representations from limited atomic features.  
 - **Generalization**: Models must capture biochemical patterns without overfitting.
 
-## 📊 Dataset
+### 📊 Dataset
 The dataset consists of molecular graphs derived from chemical compound databases.
 
 - **Total Graphs**: 5,000  
@@ -31,28 +34,28 @@ The dataset consists of molecular graphs derived from chemical compound database
 - **Features**: Node-level descriptors (atomic properties) and adjacency matrices (bonds)  
 - **Format**: Separate files for metadata, graph structure, and node features  
 
-## 📁 File Structure
+### 📁 File Structure
 
-### 1. `data/train.csv` (Training Metadata)
+#### 1. `data/train.csv` (Training Metadata)
 
 | Column Name | Type | Description |
 |------------|------|-------------|
 | graph_id   | int  | Unique identifier for the molecular graph (0–3999) |
 | target     | int  | Ground truth label (0 = Inactive, 1 = Active) |
 
-### 2. `data/test.csv` (Test Metadata)
+#### 2. `data/test.csv` (Test Metadata)
 
 | Column Name | Type | Description |
 |------------|------|-------------|
 | graph_id   | int  | Unique identifier for the molecular graph (4000–4999) |
 
-### 3. `data/node_features.pkl`
+#### 3. `data/node_features.pkl`
 A dictionary mapping `graph_id` to a NumPy array of node features.
 
 - **Shape**: `(num_nodes, num_node_features)`  
 - **Content**: Atomic properties (e.g., atomic number, degree, hybridization)
 
-### 4. `data/graph_structures.pkl`
+#### 4. `data/graph_structures.pkl`
 A dictionary mapping `graph_id` to adjacency information.
 
 - **Key**: `edge_list` → List of tuples `[(node_u, node_v), ...]` representing bonds
@@ -106,18 +109,16 @@ pip install -r requirements.txt
 
 # Running Baseline Models
 
-Starter code is provided for the following **Graph Neural Network** architectures:
+Starter code is provided for the following architectures:
 
-- **GCN** (Graph Convolutional Network)  
-- **GAT** (Graph Attention Network)  
-- **GIN** (Graph Isomorphism Network)  
+- **RFC** (RandomForest Classifier)  
 
 ## Train a Baseline GCN Model
 ```bash
 python starter_code/train.py --model gcn --epochs 15
 ```
 
-# This Will Do
+## This Will Do
 
 This process will:
 
@@ -141,5 +142,37 @@ This process will:
 ## 🏆 Leaderboard
 
 <!-- LEADERBOARD-START -->
-
 <!-- LEADERBOARD-END -->
+
+## 📁 Repository Structure
+
+```
+├── .github
+│   └── workflows
+│       └── score_submission.yml
+├── data
+│   ├── graph_structures.pkl
+│   ├── node_features.pkl
+│   ├── test.csv
+│   ├── test_labels.csv
+│   └── train.csv
+├── scoring
+│   ├── generate_html_leaderboard.py
+│   ├── scoring_script.py
+│   └── update_leaderboard.py
+├── starter_code
+│   ├── baseline.py
+│   ├── data_loader.py
+│   ├── gnn_models.py
+│   └── train.py
+├── submissions
+│   └── submission_samples.csv
+├── .gitignore
+├── README.md
+├── index.html
+├── leaderboard.csv
+├── leaderboard.html
+├── leaderboard.md
+├── pyproject.toml
+└── requirements.txt
+```
