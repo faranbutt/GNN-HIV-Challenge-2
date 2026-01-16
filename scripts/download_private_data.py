@@ -24,7 +24,6 @@ def download_labels():
     url = os.getenv('PRIVATE_DATA_URL', default_url)
     
     download_url = convert_drive_link(url)
-    print(f"Attempting to download from: {download_url}")
     
     try:
         session = requests.Session()
