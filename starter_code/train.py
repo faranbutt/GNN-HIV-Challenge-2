@@ -1,3 +1,4 @@
+import argparse
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -31,7 +32,6 @@ def train_model(model_type='gcn', epochs=15, batch_size=32):
             total_loss += loss.item()
         print(f"Epoch {epoch+1:02d} | Loss: {total_loss/len(train_loader):.4f}")
 
-    # Inference
     model.eval()
     records = []
     with torch.no_grad():
@@ -46,5 +46,7 @@ def train_model(model_type='gcn', epochs=15, batch_size=32):
     df.to_csv(f'submissions/pyg_{model_type}.csv', index=False)
 
 if __name__ == "__main__":
-    train_model('gcn')
-
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--model', type=str, default='gcn', choices=['gcn', 'gat', 'gin'])
+    args = parser.parse_args()
+    train_model(args.model)

@@ -111,11 +111,24 @@ pip install -r requirements.txt
 
 Starter code is provided for the following architectures:
 
-- **RFC** (RandomForest Classifier)  
+- **RFC** (RandomForest Classifier) 
+- **GCN** (Graph Neural Network)
+- **GIN** (Graph Isomorphism Network)
+- **GAT** (Graph Attention Network)
 
 ## Train a Baseline GCN Model
 ```bash
+#default model
+python starter_code/train.py
+
+#GCN
 python starter_code/train.py --model gcn --epochs 15
+
+#GAT
+python starter_code/train.py --model gat --epochs 15
+
+#GIN
+python starter_code/train.py --model gin --epochs 15
 ```
 
 ## This Will Do
@@ -181,3 +194,7 @@ This process will:
 ├── pyproject.toml
 └── requirements.txt
 ```
+
+## Refrences
+[Basira Lab Deep Graph Learning Playlist](https://www.youtube.com/watch?v=gQRV_jUyaDw&list=PLug43ldmRSo14Y_vt7S6vanPGh-JpHR7T)
+[Basira Lab Deep Graph Learning Github](https://github.com/basiralab/DGL)
