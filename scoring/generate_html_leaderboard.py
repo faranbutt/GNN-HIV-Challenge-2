@@ -6,7 +6,6 @@ def generate_html(csv_file='leaderboard.csv', output_file='leaderboard.html'):
     try:
         df = pd.read_csv(csv_file)
     except FileNotFoundError:
-        # Create empty df if file doesn't exist
         df = pd.DataFrame(columns=['Rank', 'User', 'Submission File', 'ROC-AUC', 'Date'])
 
     html_content = """

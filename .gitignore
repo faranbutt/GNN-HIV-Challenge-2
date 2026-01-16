@@ -14,9 +14,7 @@ __pycache__/
 *.ckpt
 *.log
 .ipynb_checkpoints/
-!/submissions/.gitkeep       
-/data/*.pkl                         
-/data/*.csv                  
+!/submissions/.gitkeep                      
 /results/
 /outputs/
 .vscode/

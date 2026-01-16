@@ -1,10 +1,7 @@
-# scoring/update_leaderboard.py
 import pandas as pd
 import os
 from datetime import datetime
 import re
-
-# File paths (Ensure these match your actual file names)
 leaderboard_csv = 'leaderboard.csv'
 leaderboard_html = 'leaderboard.html'
 readme_file = 'README.md'
@@ -74,20 +71,13 @@ def generate_html_content(df):
 """
     return html_content
 
-# --- Main Execution ---
-
-# Load existing leaderboard
 try:
     leaderboard = pd.read_csv(leaderboard_csv)
 except FileNotFoundError:
     leaderboard = pd.DataFrame(columns=['Rank', 'User', 'Submission File', 'ROC-AUC', 'Date'])
-
-# Get new entry from Environment Variables
 user = os.getenv('PR_USER', 'Anonymous')
 submission_file = os.getenv('PR_SUBMISSION', 'submission.csv')
 roc_auc = float(os.getenv('PR_SCORE', 0))
-
-# Create new entry
 new_entry = pd.DataFrame([{
     'Rank': len(leaderboard) + 1,
     'User': user,
@@ -96,22 +86,15 @@ new_entry = pd.DataFrame([{
     'Date': datetime.now().strftime('%Y-%m-%d')
 }])
 
-# Concat and Sort
 leaderboard = pd.concat([leaderboard, new_entry], ignore_index=True)
 leaderboard = leaderboard.sort_values(by='ROC-AUC', ascending=False).reset_index(drop=True)
 leaderboard['Rank'] = leaderboard.index + 1
-
-# 1. Save CSV
 leaderboard.to_csv(leaderboard_csv, index=False)
 print(f"Updated {leaderboard_csv}")
-
-# 2. Generate HTML (Inline logic to avoid import errors)
 html_content = generate_html_content(leaderboard)
 with open(leaderboard_html, 'w') as f:
     f.write(html_content)
 print(f"Generated {leaderboard_html}")
-
-# 3. Update README
 table_lines = [
     '| Rank | User | Submission File | ROC-AUC | Date |',
     '|------|------|----------------|---------|------|'
