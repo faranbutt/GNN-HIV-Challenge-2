@@ -1,50 +1,145 @@
 # GNN HIV Challenge: Molecular Graph Classification for Drug Discovery
 
-## 🚀 Project Overview
-The **GNN HIV Challenge** is a benchmark for graph neural networks on molecular property prediction.  
-The goal is to classify molecular graphs to predict anti-HIV activity using **GCN, GAT, and GIN models**.  
+## 🎯 Challenge Overview
+Welcome to the **GNN HIV Challenge**! This competition focuses on predicting the molecular properties of chemical compounds to identify potential inhibitors of HIV.
 
-**Dataset:**
-- 5,000 molecular graphs  
-  - 3,000 training  
-  - 1,000 test  
-- Features: Node-level descriptors, adjacency matrices  
-- Class distribution: 25% positive, 75% negative  
+## 🏆 View Live Leaderboard
 
-**Evaluation Metric:** ROC-AUC  
+## 🧪 Problem Description
+The task is to classify **molecular graphs** to predict anti-HIV activity.
 
-**Baseline Performance:** ~0.76 ROC-AUC  
+- **Input**: A molecular graph structure (atoms as nodes, bonds as edges) and atomic-level features  
+- **Output**: A probability score indicating the likelihood that the molecule inhibits HIV replication  
+- **Goal**: Develop Graph Neural Network models (GCN, GAT, GIN) that generalize to unseen molecular structures  
+
+### Labels
+- **0**: Non-Inhibitor (Inactive)  
+- **1**: Inhibitor (Active)  
+
+## 🤔 What’s Challenging?
+- **Non-Euclidean Data**: Molecules are graph-structured data with varying sizes and complex topologies.  
+- **Class Imbalance**: The dataset is imbalanced (~25% positive, ~75% negative), so ROC-AUC is preferred over accuracy.  
+- **Feature Sparsity**: Models must learn meaningful molecular representations from limited atomic features.  
+- **Generalization**: Models must capture biochemical patterns without overfitting.
+
+## 📊 Dataset
+The dataset consists of molecular graphs derived from chemical compound databases.
+
+- **Total Graphs**: 5,000  
+- **Training**: 4,000 graphs  
+- **Test**: 1,000 graphs  
+- **Features**: Node-level descriptors (atomic properties) and adjacency matrices (bonds)  
+- **Format**: Separate files for metadata, graph structure, and node features  
+
+## 📁 File Structure
+
+### 1. `data/train.csv` (Training Metadata)
+
+| Column Name | Type | Description |
+|------------|------|-------------|
+| graph_id   | int  | Unique identifier for the molecular graph (0–3999) |
+| target     | int  | Ground truth label (0 = Inactive, 1 = Active) |
+
+### 2. `data/test.csv` (Test Metadata)
+
+| Column Name | Type | Description |
+|------------|------|-------------|
+| graph_id   | int  | Unique identifier for the molecular graph (4000–4999) |
+
+### 3. `data/node_features.pkl`
+A dictionary mapping `graph_id` to a NumPy array of node features.
+
+- **Shape**: `(num_nodes, num_node_features)`  
+- **Content**: Atomic properties (e.g., atomic number, degree, hybridization)
+
+### 4. `data/graph_structures.pkl`
+A dictionary mapping `graph_id` to adjacency information.
+
+- **Key**: `edge_list` → List of tuples `[(node_u, node_v), ...]` representing bonds
+
+## 🔄 Example Data Flow
+To load a single training sample:
+
+```python
+import pandas as pd
+import pickle
+
+train_df = pd.read_csv('data/train.csv')
+row = train_df.iloc[0]
+gid = row['graph_id']
+
+with open('data/node_features.pkl', 'rb') as f:
+    feats = pickle.load(f)
+
+with open('data/graph_structures.pkl', 'rb') as f:
+    structs = pickle.load(f)
+
+x = feats[gid]                   
+edges = structs[gid]['edge_list'] 
+y = row['target']            
+
+```
+# 🎯 Evaluation Metric
+
+**Primary Metric**: ROC-AUC (Area Under the Receiver Operating Characteristic Curve)
+
+- **Range**: 0.0 – 1.0  
+
+### Interpretation
+- **1.0**: Perfect classifier  
+- **0.5**: Random guessing  
+- **< 0.5**: Worse than random  
+
+ROC-AUC is threshold-independent and robust to class imbalance, making it ideal for screening tasks.
 
 ---
-## 📁 Repository Structure
-```
 
-├── 📁 .github
-│   └── 📁 workflows
-│       └── ⚙️ score_submission.yml
-├── 📁 data
-│   ├── 📄 graph_structures.pkl
-│   ├── 📄 node_features.pkl
-│   ├── 📄 test.csv
-│   ├── 📄 test_labels.csv
-│   └── 📄 train.csv
-├── 📁 scoring
-│   ├── 🐍 scoring_script.py
-│   └── 🐍 update_leaderboard.py
-├── 📁 starter_code
-│   ├── 🐍 baseline.py
-│   ├── 🐍 data_loader.py
-│   ├── 🐍 gnn_models.py
-│   └── 🐍 train.py
-├── 📁 submissions
-├── ⚙️ .gitignore
-├── 📝 README.md
-├── ⚙️ pyproject.toml
-└── 📄 requirements.txt
+# 🚀 Getting Started
+
+## Installation
+```bash
+git clone https://github.com/faranbutt/GNN-HIV-Challenge-2.git
+cd GNN-HIV-Challenge-2
+pip install -r requirements.txt
 
 ```
+
+# Running Baseline Models
+
+Starter code is provided for the following **Graph Neural Network** architectures:
+
+- **GCN** (Graph Convolutional Network)  
+- **GAT** (Graph Attention Network)  
+- **GIN** (Graph Isomorphism Network)  
+
+## Train a Baseline GCN Model
+```bash
+python starter_code/train.py --model gcn --epochs 15
+```
+
+# This Will Do
+
+This process will:
+
+- Train on `data/train.csv`  
+- Generate predictions for `data/test.csv`  
+- Save the submission file to `submissions/pyg_gcn.csv`  
+
+---
+
+# 🏆 How to Participate
+
+- Fork this repository  
+- Develop your model in a new branch or in your fork  
+- Generate a CSV file `submissions/<your_username>.csv` with the following columns:
+  - `graph_id`: Integer ID  
+  - `probability`: Float prediction (0.0 to 1.0)  
+- Commit the file to the `submissions/` folder  
+- Open a Pull Request to the main branch  
+- GitHub Actions will automatically evaluate your submission and comment on the PR with your score  
 
 ## 🏆 Leaderboard
 
 <!-- LEADERBOARD-START -->
+
 <!-- LEADERBOARD-END -->
