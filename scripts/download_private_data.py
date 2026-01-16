@@ -18,9 +18,6 @@ def convert_drive_link(url):
     return url
 
 def download_labels():
-    """
-    Downloads test labels from a secure URL.
-    """
     output_path = 'data/test_labels.csv'
     os.makedirs('data', exist_ok=True)
     default_url = "https://example.com/dummy_data.csv" 
