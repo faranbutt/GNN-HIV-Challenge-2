@@ -28,3 +28,4 @@ uv.lock
 /.kaggle/
 check_data.py
 generate_data.py
+data/test_labels.csv
