@@ -159,7 +159,6 @@ This process will:
 | Rank | User | Submission File | ROC-AUC | Date |
 |------|------|----------------|---------|------|
 | 1 | faranbutt | submissions/default.csv | 0.4747 | 2026-01-16 |
-| 2 | faranbutt | submissions/submission_samples.csv | 0.4747 | 2026-01-16 |
 
 <!-- LEADERBOARD-END -->
 
