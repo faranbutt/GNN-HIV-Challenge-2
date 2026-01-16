@@ -32,6 +32,12 @@ jobs:
         pip install --upgrade pip
         pip install -r requirements.txt
 
+    - name: Download Private Data
+      env:
+        PRIVATE_DATA_URL: ${{ secrets.DEFAULT_URL }}
+      run: |
+        python scripts/download_private_data.py
+
     - name: Find Submission File
       id: find_submission
       run: |
