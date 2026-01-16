@@ -196,5 +196,5 @@ This process will:
 ```
 
 ## Refrences
-[Basira Lab Deep Graph Learning Playlist](https://www.youtube.com/watch?v=gQRV_jUyaDw&list=PLug43ldmRSo14Y_vt7S6vanPGh-JpHR7T)
-[Basira Lab Deep Graph Learning Github](https://github.com/basiralab/DGL)
+- [Basira Lab Deep Graph Learning Playlist](https://www.youtube.com/watch?v=gQRV_jUyaDw&list=PLug43ldmRSo14Y_vt7S6vanPGh-JpHR7T)
+- [Basira Lab Deep Graph Learning Github](https://github.com/basiralab/DGL)
