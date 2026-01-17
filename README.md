@@ -172,7 +172,7 @@ This process will:
 │   ├── graph_structures.pkl
 │   ├── node_features.pkl
 │   ├── test.csv
-│   ├── test_labels.csv
+│   ├── test_labels.csv # (Non Accesable)
 │   └── train.csv
 ├── scoring
 │   ├── generate_html_leaderboard.py
